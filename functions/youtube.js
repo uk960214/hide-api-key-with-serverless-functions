@@ -30,6 +30,7 @@ exports.handler = async (event) => {
   try {
     const response = await fetch(url, { headers: { referer } });
     const body = await response.json();
+    body[parameters] = queryStringParameters;
 
     if (body.error) {
       return {
@@ -45,7 +46,6 @@ exports.handler = async (event) => {
       ok: true,
       headers,
       body: stringify(body),
-      parameters: queryStringParameters,
     };
   } catch (error) {
     return {
