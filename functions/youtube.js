@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-const querystring = require("querystring");
 const stringify = require("../utils/stringify.js");
 
 const GOOGLEAPIS_ORIGIN = "https://www.googleapis.com";
@@ -16,10 +15,14 @@ exports.handler = async (event) => {
   } = event;
 
   const url = new URL(path, GOOGLEAPIS_ORIGIN);
-  const parameters = querystring.stringify({
-    ...queryStringParameters,
-    key: process.env.API_KEY,
-  });
+  const parameters = Object.keys(queryStringParameters).reduce(
+    (searchParams, key) => {
+      searchParams.append(key, queryStringParameters[key]);
+    },
+    new URLSearchParams({
+      key: process.env.API_KEY,
+    })
+  );
 
   url.search = parameters;
 
