@@ -18,6 +18,7 @@ exports.handler = async (event) => {
   const parameters = Object.keys(queryStringParameters).reduce(
     (searchParams, key) => {
       searchParams.append(key, queryStringParameters[key]);
+      return searchParams;
     },
     new URLSearchParams({
       key: process.env.API_KEY,
