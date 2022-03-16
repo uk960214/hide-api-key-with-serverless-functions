@@ -17,6 +17,11 @@ exports.handler = async (event) => {
   const url = new URL(path, GOOGLEAPIS_ORIGIN);
   const parameters = Object.keys(queryStringParameters).reduce(
     (searchParams, key) => {
+      if (key === id) {
+        const ids = queryStringParameters.split(", ");
+        ids.map((id) => searchParams.append("id", id));
+        return searchParams;
+      }
       searchParams.append(key, queryStringParameters[key]);
       return searchParams;
     },
@@ -30,7 +35,7 @@ exports.handler = async (event) => {
   try {
     const response = await fetch(url, { headers: { referer } });
     const body = await response.json();
-    body[parameters] = queryStringParameters;
+    body.parameters = queryStringParameters;
 
     if (body.error) {
       return {
