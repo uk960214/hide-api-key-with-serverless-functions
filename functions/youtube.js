@@ -25,6 +25,8 @@ exports.handler = async (event) => {
     })
   );
 
+  console.log(parameters);
+
   url.search = parameters;
 
   try {
