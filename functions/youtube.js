@@ -17,8 +17,8 @@ exports.handler = async (event) => {
   const url = new URL(path, GOOGLEAPIS_ORIGIN);
   const parameters = Object.keys(queryStringParameters).reduce(
     (searchParams, key) => {
-      if (key === id) {
-        const ids = queryStringParameters.split(", ");
+      if (key === "id") {
+        const ids = queryStringParameters[key].split(", ");
         ids.map((id) => searchParams.append("id", id));
         return searchParams;
       }
