@@ -25,8 +25,6 @@ exports.handler = async (event) => {
     })
   );
 
-  console.log(parameters);
-
   url.search = parameters;
 
   try {
@@ -47,6 +45,7 @@ exports.handler = async (event) => {
       ok: true,
       headers,
       body: stringify(body),
+      parameters: queryStringParameters,
     };
   } catch (error) {
     return {
